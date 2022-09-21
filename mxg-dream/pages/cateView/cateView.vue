@@ -2,19 +2,20 @@
 	<view>
 		<view class="cate-box">
 			<scroll-view scroll-y="true" class="left" :show-scrollbar="false">
-				<view >
-					<view class="left-item active" v-for="item,index in leftlist" :key="index">
+				<view>
+					<view class="left-item" v-for="item,index in leftlist" :key="index" @click="add(index)">
 						{{item.name}}
 					</view>
 				</view>
 			</scroll-view>
-			
-			
+
+
 			<view class="right">
 				<view class="right-box">
-					<view class="right-item"  v-for="items,index in leftlists" :key="index">
-						{{items.name}}
+					<view class="right-item" v-for="item,index in leftlist" :key="index">
+						{{item.labelList[i].name}}
 					</view>
+
 				</view>
 			</view>
 		</view>
@@ -22,31 +23,42 @@
 </template>
 
 <script>
-	import {ref,reactive,toRefs} from 'vue';
-	import {classification} from "@/utils/utils/home.js"
+	import {
+		ref,
+		reactive,
+		toRefs
+	} from 'vue';
+	import {
+		classification
+	} from "@/utils/utils/home.js"
 	export default {
 		setup() {
-			const data=reactive({
-				leftlist:[],
-				leftlists:[]
+			const data = reactive({
+				leftlist: [],
+				i: 0
 			})
-			classification().then((res)=>{
+			const add = (index) => {
+				console.log(index);
+				data.i = index
+			}
+			classification().then((res) => {
 				console.log(res);
 				data.leftlist=res.data
-				data.leftlists=res.data.labelList
 			})
 			return {
-				...toRefs(data)
+				...toRefs(data),
+				add
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.active{
+	.active {
 		color: #345dc2 !important;
 	}
-	.active::before:hover{
+
+	.active::before {
 		content: "";
 		position: absolute;
 		width: 6rpx;
@@ -55,39 +67,49 @@
 		left: 0;
 		top: 35%;
 	}
-.cate-box{
-	width: 100%;
-	display: flex;
-	.left{
-		width: 30%;
-		text-align: center;
-		height: calc(100vh - 100rpx);
-		background-color: #f8f9fb;
-		.left-item{
-			height: 140rpx;
-			line-height: 140rpx;
-			font-size: 30rpx;
-			font-weight: 400;
-			position: relative;
-			color: #8c8c8c;
+
+	.cate-box {
+		width: 100%;
+		display: flex;
+
+		.left {
+			width: 30%;
+			text-align: center;
+			height: calc(100vh - 100rpx);
+			background-color: #f8f9fb;
+
+			.left-item {
+				height: 140rpx;
+				line-height: 140rpx;
+				font-size: 30rpx;
+				font-weight: 400;
+				position: relative;
+				color: #8c8c8c;
+			}
+
+			.left-item:hover {
+				border-left: 2px solid #345dc2;
+			}
 		}
-	}
-	.right{
-		flex: 1;
-		.right-box{
-			width: 100%;
-			padding: 5%;
-			.right-item{
-				display: inline-block;
-				height: 64rpx;
-				line-height: 64rpx;
-				padding: 0 2%;
-				border-radius: 30rpx;
-				border: 1px solid #bbb;
-				margin: 2%;
-				color: #33352d;
+	
+	.right {
+			flex: 1;
+
+			.right-box {
+				width: 100%;
+				padding: 5%;
+
+				.right-item {
+					display: inline-block;
+					height: 64rpx;
+					line-height: 64rpx;
+					padding: 0 2%;
+					border-radius: 30rpx;
+					border: 1px solid #bbb;
+					margin: 2%;
+					color: #33352d;
+				}
 			}
 		}
 	}
-}
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="top">
-			<navigator url="pages/index/index" open-type="switchTab">&lt;</navigator>
+			<navigator url="pages/index/index" open-type="switchTab" @click="$router.go(-1)">&lt;</navigator>
 			<view class="center">
 				<input type="text" placeholder="搜索你想要的内容">
 			</view>

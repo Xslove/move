@@ -4,45 +4,48 @@
 			<!-- 搜索 -->
 			<search></search>
 			<!-- 分类 -->
-			<view class="cate-box">
-				<view class="cate-item active">
-					推荐
+			<scroll-view scroll-x="true" :show-scrollbar="false">
+				<view class="cate-box">
+					<view class="cate-item active">
+						推荐
+					</view>
+					<view class="cate-item" v-for="item,index in toplist" :key="index">
+						{{item.name}}
+					</view>
 				</view>
-				<view class="cate-item">
-					Java
-				</view>
-				<view class="cate-item">
-					前端
-				</view>
-				<view class="cate-item">
-					云计算
-				</view>
-				<view class="cate-item">
-					运维
-				</view>
-			</view>
+			</scroll-view>
+			
 		</view>
 		
 		<!-- 内容 -->
 		<view class="article-box">
-			<articleView></articleView>
-			<articleView></articleView>
-			<articleView></articleView>
-			<articleView></articleView>
-			<articleView></articleView>
-			<articleView></articleView>
-			<articleView></articleView>
+			<articleView :yuetuilist="yuetuilist"></articleView>
+			
 		</view>
 	</view>
 </template>
 
 <script>
+	import {ref,reactive,toRefs} from 'vue'
+	import {yuedu,yuetui} from "@/utils/utils/home.js"
 	export default {
-		data() {
-			return {
-				
-			};
+	setup() {
+		const data=reactive({
+			toplist:[],
+			yuetuilist:[]
+		})
+		yuedu().then((res)=>{
+			console.log(res);
+			data.toplist=res.data
+		})
+		yuetui().then((res)=>{
+			console.log(res);
+			data.yuetuilist=res.data.records
+		})
+		return {
+			...toRefs(data)
 		}
+	}
 	}
 </script>
 
@@ -67,6 +70,7 @@
 	background-color: #fff;
 	border: none;
 	.cate-item{
+		width: 80rpx;
 		height: 70rpx;
 		line-height: 70rpx;
 	}

@@ -6,75 +6,33 @@
 			<view style="width: 130px;">文章</view>
 			<view style="width: 130px;">问答</view>
 		</div>
-		<div class="cenbox">
-			<uni-data-select v-model="value" :localdata="range" @change="change"></uni-data-select>
-			<uni-data-select v-model="value" :localdata="range1" @change="change"></uni-data-select>
-			<uni-data-select v-model="value" :localdata="range2" @change="change"></uni-data-select>
-		</div>
+		<!-- 商品列表 -->
+		<scroll-view scroll-y="true">
+			<view>
+				<courseView :hotlist="parlist"></courseView>
+			</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
-	import {
-		ref,
-		reactive,
-		toRefs
-	} from 'vue'
-	import uniBadge from "@/components/uni-data-select/uni-data-select.vue"
+	import {ref,reactive,toRefs} from 'vue'
+	import {allow} from "@/utils/utils/home.js"
 	export default {
 		setup() {
 			const data = reactive({
-				value: 0,
-				range: [{
-						value: 0,
-						text: "综合排序"
-					},
-					{
-						value: 1,
-						text: "最新排序"
-					},
-					{
-						value: 2,
-						text: "热门排序"
-					},
-				],
-				range1: [{
-						value: 0,
-						text: "全部课程"
-					},
-					{
-						value: 1,
-						text: "付费课程"
-					},
-					{
-						value: 2,
-						text: "免费课程"
-					},
-				],
-				range2: [{
-						value: 0,
-						text: "综合排序"
-					},
-					{
-						value: 1,
-						text: "最新排序"
-					},
-					{
-						value: 2,
-						text: "热门排序"
-					},
-				],
+				parlist:[],
 			})
-			const change = (e) => {
-				console.log(e);
-			}
+			allow().then((res)=>{
+				console.log(res);
+				data.parlist=res.data.records
+			})
+			
 			return {
 				...toRefs(data),
-				change
 			}
 		},
 		components: {
-			uniBadge
 		}
 	}
 </script>

@@ -1,6 +1,6 @@
 <template>
-	<img src="https://www.mescroll.com/img/mescroll-totop.png" alt="" class="imgtop" @click="gotos">
 	<view class="content">
+		
 		<search class="search"></search>
 
 		<!-- 轮播图 -->
@@ -12,14 +12,14 @@
 		</view>
 		<view class="list-container">
 			<!-- 热门推荐 -->
-			<textView style="margin-bottom:20rpx;"></textView>
 			<!-- 商品列表 -->
 			<scroll-view scroll-y="true" :show-scrollbar="false">
-				<view><courseView :hotlist="hotlist"></courseView></view>
-				
+				<view>
+					<courseView :hotlist="hotlist"></courseView>
+				</view>
+
 			</scroll-view>
 			<!-- 近期上新 -->
-			<textView></textView>
 			<!-- 商品列表 -->
 			<scroll-view scroll-x="true" :show-scrollbar="false">
 				<view class="content-box">
@@ -28,45 +28,103 @@
 			</scroll-view>
 
 			<!-- 免费精选 -->
-			<textView></textView>
 			<!-- 商品列表 -->
 			<courseView :hotlist="hotlist"></courseView>
 			<courseView></courseView>
+			<!-- 付费精品 -->
+			<courseView :hotlist="fufeuslist"></courseView>
 		</view>
 	</view>
+	<img src="https://www.mescroll.com/img/mescroll-totop.png" alt="" class="imgtop" @click="gotos" v-show="flag">
 </template>
 
 <script>
-	import {getBanner,hot,category,news,free} from '@/utils/utils/home.js';
-	import {ref,reactive,toRefs} from 'vue'
+	import {
+		getBanner,
+		hot,
+		category,
+		news,
+		free,
+		fufeis
+	} from '@/utils/utils/home.js';
+	import {
+		ref,
+		reactive,
+		toRefs
+	} from 'vue'
+	import { onPageScroll,onPullDownRefresh,onReachBottom} from '@dcloudio/uni-app'
 	export default {
 		setup() {
 			const data = reactive({
-				categorylist: [],//首页分类
-				hotlist:[],
-				newslist:[],
-				freelist:[]
+				categorylist: [], //首页分类
+				hotlist: [],
+				newslist: [],
+				freelist: [],
+				fufeuslist:[],
+				flag: false,
+				pageSize:1,
+				page:10,
 			})
-			hot(1,10,hot).then((res)=>{
-				console.log(res);
-				data.hotlist=res.data.records
+			// 上拉刷新
+			   onPullDownRefresh(() => {
+			    data.page = 1
+			   fufeis(data.pageSize,data.page).then((res) => {
+			   	data.fufeuslist=res.data.records
+			   })
+			    // 停止下拉
+			    uni.stopPullDownRefresh()
+			   })
+			   
+			   // 触底加载
+			   onReachBottom(() => {
+			    
+				if(data.page.length!=60){
+					data.page++
+					fufeis(data.page, data.pageSize).then(res => {
+					 data.fufeuslist = [...res.data.records, ...data.fufeuslist]
+					})
+				}
+				else{
+					  uni.showToast({
+					                        "title":'已全部加载',
+					                    })
+				}
+			   })
+			hot(1, 10, hot).then((res) => {
+				// console.log(res);
+				data.hotlist = res.data.records
 			})
-			news().then((res)=>{
+			fufeis(data.current).then((res) => {
 				console.log(res);
-				data.newslist=res.data.records
+				data.fufeuslist=res.data.records
 			})
-			free().then((res)=>{
-				console.log(res);
-				data.freelist=res.data.records
+			news().then((res) => {
+				// console.log(res);
+				data.newslist = res.data.records
+			})
+			free().then((res) => {
+				// console.log(res);
+				data.freelist = res.data.records
 			})
 			const jump = () => {
 				uni.navigateTo({
-					url:'../params/params/params'
+					url: '../params/params/params'
 				});
 
 			}
-			const gotos=()=>{
-				console.log(5555);
+			
+			onPageScroll((e) => {
+				if(e.scrollTop >= 1350) {
+					data.flag = true
+				} else {
+					data.flag = false
+				}
+			})
+			
+			const gotos = () => {
+				uni.pageScrollTo({
+					scrollTop: 0	
+				})
 			}
 			category().then((res) => {
 				data.categorylist = res.data
@@ -75,22 +133,23 @@
 			return {
 				...toRefs(data),
 				jump,
-				gotos
+				gotos,
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.imgtop{
+	.imgtop {
 		width: 100rpx;
 		height: 100rpx;
 		border-radius: 50%;
 		position: fixed;
 		bottom: 200rpx;
 		right: 50rpx;
-		
+
 	}
+
 	// 分类区域
 	.list-container {
 		.scroll-view {
