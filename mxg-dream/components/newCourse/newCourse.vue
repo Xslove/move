@@ -1,39 +1,85 @@
 <template>
-		<view class="course-item" v-for="item,index in newslist" :key="index">
-			<view class="course-img">
-				<image :src="item.mainImage"></image>
-			</view>
-			<view class="first-text">
-				{{item.title}}
-			</view>
-			<view class="teacther-text">
-				<image src="../../static/images/mine.png" mode=""></image>  {{item.nickName}}
-			</view>
-			<view class="bottom">
-				<view class="left">
-					<image src="../../static/images/money.png" mode=""></image> {{item.isFree==1?'免费': item.priceOriginal }}
+		
+		<view class="box">
+			<view class="course-item" v-for="item,index in newslist" :key="index"  @click="tiao(item.id)">
+				<view class="course-img">
+					<image :src="item.mainImage"></image>
 				</view>
-				<view class="right">
-					<image src="../../static/images/video.png" mode=""></image> {{item.commTotal}}人在学
+				<view class="first-text">
+					{{item.title}}
+				</view>
+				<view class="teacther-text">
+					<image src="../../static/images/mine.png" mode=""></image>  {{item.nickName}}
+				</view>
+				<view class="bottom">
+					<view class="left">
+						<image src="../../static/images/money.png" mode=""></image> {{item.isFree==1?'免费': item.priceOriginal }}
+					</view>
+					<view class="right">
+						<image src="../../static/images/video.png" mode=""></image> {{item.commTotal}}人在学
+					</view>
 				</view>
 			</view>
 		</view>
+			
+	
 	
 </template>
 
 <script>
 	export default {
-		props:['newslist'],
+		props:['newslist','title'],
 		name:"newCourse",
-		data() {
-			return {
-				
-			};
+	setup() {
+		const tiao=(id)=>{
+			console.log(id);
+			uni.navigateTo({
+				url: `/pages/detailView/detailView?id=${id}`
+			});
+			
 		}
+		return {
+			tiao
+		}
+	}
 	}
 </script>
 
 <style lang="scss">
+	.box{
+		display: flex;
+	}
+	.header{
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				padding: 2% 4%;
+				box-sizing: border-box;
+				.left{
+					view{
+						float: left;
+					}
+					.left-text{
+						font-size: 40rpx;
+						color: #474a49;
+					}
+					.hot-text{
+						font-size: 24rpx;
+						text-align: center;
+						width: 80rpx;
+						height: 40rpx;
+						line-height: 40rpx;
+						background-image: linear-gradient(to right,#fb6731,#fa1b11);
+						color: white;
+						border-radius: 20rpx;
+						border-bottom-left-radius: 5rpx;
+						
+					}
+				}
+				.right{
+					color: #7a7a7a;
+				}
+			}
 .course-item{
 		width: 9.875rem;
 		padding: 20rpx;

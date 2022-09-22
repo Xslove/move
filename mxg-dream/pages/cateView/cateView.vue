@@ -3,7 +3,7 @@
 		<view class="cate-box">
 			<scroll-view scroll-y="true" class="left" :show-scrollbar="false">
 				<view>
-					<view class="left-item" v-for="item,index in leftlist" :key="index" @click="add(index)">
+					<view class="left-item" v-for="item,index in leftlist" :key="index" @click="changeId(item,item.id)">
 						{{item.name}}
 					</view>
 				</view>
@@ -12,8 +12,8 @@
 
 			<view class="right">
 				<view class="right-box">
-					<view class="right-item" v-for="item,index in leftlist" :key="index">
-						{{item.labelList[i].name}}
+					<view class="right-item" v-for="item,index in cateRight" :key="index" @click="tiao(item.id)">
+						{{item.name}}
 					</view>
 
 				</view>
@@ -33,21 +33,31 @@
 	} from "@/utils/utils/home.js"
 	export default {
 		setup() {
+			
 			const data = reactive({
 				leftlist: [],
-				i: 0
+				cateRight:[],
+				currentId: 1
 			})
-			const add = (index) => {
-				console.log(index);
-				data.i = index
+			const tiao=(id)=>{
+				uni.navigateTo({
+					url:'/pages/params/params/params'
+				})
+			}
+			const changeId=(item,id)=>{
+				data.cateRight=item.labelList
+				data.currentId=id
+				
 			}
 			classification().then((res) => {
 				console.log(res);
 				data.leftlist=res.data
+				data.cateRight=res.data[data.currentId-1].labelList
 			})
 			return {
 				...toRefs(data),
-				add
+				changeId,
+				tiao
 			}
 		}
 	}

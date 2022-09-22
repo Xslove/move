@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="article-item" v-for="item,index in yuetuilist" :key="index">
+		<view class="article-item" v-for="item,index in yuetuilist" :key="index" @click="tiao(item.id)">
 			<view class="left">
 				<view class="fir-text">
 					{{item.title}}
@@ -30,10 +30,17 @@
 	export default {
 		props:['yuetuilist'],
 		name:"articleView",
-		data() {
-			return {
+		setup() {
+			const tiao=(id)=>{
+				console.log(id);
+				uni.navigateTo({
+					url: `/pages/readmore/readmore?id=${id}`
+				});
 				
-			};
+			}
+			return {
+				tiao
+			}
 		}
 	}
 </script>

@@ -15,24 +15,25 @@
 			<!-- 商品列表 -->
 			<scroll-view scroll-y="true" :show-scrollbar="false">
 				<view>
-					<courseView :hotlist="hotlist"></courseView>
+					<courseView :hotlist="hotlist" :title="titlelist1"></courseView>
 				</view>
 
 			</scroll-view>
 			<!-- 近期上新 -->
+			<textView></textView>
 			<!-- 商品列表 -->
-			<scroll-view scroll-x="true" :show-scrollbar="false">
-				<view class="content-box">
-					<newCourse :newslist="newslist"></newCourse>
-				</view>
-			</scroll-view>
+				<scroll-view scroll-x="true" :show-scrollbar="false">
+					<view class="bigbox">
+						<newCourse :newslist="newslist" :title="titlelist4"></newCourse>
+					</view>
+				</scroll-view>
+			
 
 			<!-- 免费精选 -->
 			<!-- 商品列表 -->
-			<courseView :hotlist="hotlist"></courseView>
-			<courseView></courseView>
+			<courseView :hotlist="hotlist" :title="titlelist2"></courseView>
 			<!-- 付费精品 -->
-			<courseView :hotlist="fufeuslist"></courseView>
+			<courseView :hotlist="fufeuslist" :title="titlelist3"></courseView>
 		</view>
 	</view>
 	<img src="https://www.mescroll.com/img/mescroll-totop.png" alt="" class="imgtop" @click="gotos" v-show="flag">
@@ -58,6 +59,10 @@
 			const data = reactive({
 				categorylist: [], //首页分类
 				hotlist: [],
+				titlelist1:'热门推荐',
+				titlelist2:'免费精选',
+				titlelist3:'付费精品',
+				titlelist4:'近期上新',
 				newslist: [],
 				freelist: [],
 				fufeuslist:[],
@@ -140,6 +145,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.bigbox{
+		display: flex;
+	}
 	.imgtop {
 		width: 100rpx;
 		height: 100rpx;

@@ -3,7 +3,7 @@
 		<view class="header">
 			<view class="left">
 				<view class="left-text">
-					{{title}}
+					近期上新
 				</view>
 				 <view class="hot-text">
 					HOT
@@ -18,7 +18,6 @@
 
 <script>
 	export default {
-		props:['title']
 		name:"textView",
 		data() {
 			return {

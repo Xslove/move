@@ -86,8 +86,13 @@
 			<view class="last-tab" v-show="currentId==3">
 				<view class="content" v-for="item in setmealList" :key="item.id">
 					<p>{{ item.title }}</p>
-					<couresView :couresList="item.list"></couresView>
+					<courseView :couresList="item.list"></courseView>
+					<view class="purchase">
+						<h3>￥{{ item.groupPrice }} <s>￥{{ item.totalPrice }}</s> </h3>
+						<p>购买套餐</p>
+					</view>
 				</view>
+				
 			</view>
 		</view>
 
@@ -104,20 +109,20 @@
 		toRefs,
 		ref,
 		onMounted
-	} from "vue"
+	} from "vue";
 	import {
 		useRoute,
 		useRouter
-	} from 'vue-router'
+	} from 'vue-router';
 	import {
 		detail,
 		sections,
 		comment,
 		setmeal
-	} from '../../api/detail.js'
+	} from '@/utils/utils/home.js';
 	import {
 		onPageScroll
-	} from '@dcloudio/uni-app'
+	} from '@dcloudio/uni-app';
 	export default {
 		setup() {
 			const route = useRoute()
@@ -162,6 +167,7 @@
 
 			// 详情
 			detail().then(res => {
+				console.log(res);
 				data.detailList = res.data
 			})
 			// 章节
@@ -281,6 +287,7 @@
 		.thr-tab,
 		.last-tab {
 			width: 100%;
+			padding-bottom: 60rpx;
 			image {
 				width: 100%;
 				display: block;
@@ -288,12 +295,31 @@
 		}
 		.last-tab {
 			padding: 20rpx;
+			// padding-bottom: 60rpx;
 			.content {
 				width: 96%;
 				margin: 30rpx auto;
 				padding: 10rpx;
 				box-shadow: 1px 1px 3px rgb(0 0 0 / 10%);
+				.purchase {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					p{
+						color: #fb403b;
+						font-weight: 600;
+						font-size: 30rpx;
+					}
+					h3 {
+						color: #fb403b;
+						s {
+							color: #79797b;
+							font-size: 30rpx;
+						}
+					}
+				}
 			}
+			
 		}
 
 		.fir-tab {

@@ -13,7 +13,7 @@
 				全部 >
 			</view>
 		</view>
-		<view class="course-item" v-for="item,index in hotlist" :key="index">
+		<view class="course-item" v-for="item,index in hotlist" :key="index" @click="tiao(item.id)">
 			<view class="course-img">
 				<image :src="item.mainImage" mode=""></image>
 			</view>
@@ -39,13 +39,20 @@
 
 <script>
 	export default {
-		props:['hotlist','freelist'],
+		props:['hotlist','freelist','title'],
 		name:"courseView",
-		data() {
-			return {
-				
-			};
+	setup() {
+		const tiao=(id)=>{
+			console.log(id);
+			uni.navigateTo({
+				url: `/pages/detailView/detailView?id=${id}`
+			});
+			
 		}
+		return {
+			tiao
+		}
+	}
 	}
 </script>
 

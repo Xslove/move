@@ -66,6 +66,11 @@ async function classification() {
 	} = await http.get('article/api/category/label/list')
 	return data
 }
+//切换分类
+async function tabfens() {
+	const {data} = await http.post('article/api/article/search',{categoryId: 1, current: 1, size: 10})
+	return data
+}
 // 阅读头部分类
 async function yuedu() {
 	const {
@@ -96,6 +101,47 @@ async function yuetui() {
 	})
 	return data
 }
+// 详情
+async function detail() {
+	const {
+		data
+	} = await http.get('course/api/course/null')
+	return data
+}
+	// 章节
+async function sections() {
+	const {
+		data
+	} = await http.get('course/api/chapter/section/list/null')
+	return data
+}
+// 评论
+async function comment() {
+	const {
+		data
+	} = await http.get('course/api/comment/list/null')
+	return data
+}
+// 套餐
+async function setmeal() {
+	const {
+		data
+	} = await http.get('course/api/group/list/null')
+	return data
+}
+// 问答
+async function asks() {
+	const {data} = await http.post('question/api/question/hot',{current: 1, size: 10})
+	return data
+}
+async function yueduxiang() {
+	const {data} = await http.get('article/api/article/12')
+	return data
+}
+async function qingjia() {
+	const {data} = await http.get('article/api/comment/list/14')
+	return data
+}
 export {
 	getBanner,
 	category,
@@ -104,7 +150,15 @@ export {
 	free,
 	fufeis,
 	classification,
+	tabfens,
 	yuedu,
 	allow,
-	yuetui
+	yuetui,
+	detail,
+	sections,
+	comment,
+	setmeal,
+	asks,
+	yueduxiang,
+	qingjia
 }

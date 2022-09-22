@@ -59,6 +59,14 @@
                 "enablePullDownRefresh": false
             }
             
+        },{
+            "path" : "pages/detailView/detailView",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
         }
         ,{
             "path" : "pages/params/params/params",
@@ -78,6 +86,15 @@
 				}
             }
 			
+            
+        }
+        ,{
+            "path" : "pages/readmore/readmore",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "custom",
+                "enablePullDownRefresh": false
+            }
             
         }
     ],
