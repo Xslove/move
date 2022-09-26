@@ -67,7 +67,57 @@
                 "enablePullDownRefresh": false
             }
             
-        }
+        },
+		{
+		    "path" : "pages/orderView/orderView",
+		    "style" :                                                                                    
+		    {
+		       "navigationStyle": "custom",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/balanceView/balanceView",
+		    "style" :                                                                                    
+		    {
+		       "navigationStyle": "custom",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/studyView/studyView",
+		    "style" :                                                                                    
+		    {
+		       "navigationStyle": "custom",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/feedbackView/feedbackView",
+		    "style" :                                                                                    
+		    {
+		       "navigationStyle": "custom",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+			"path": "pages/opinionView/opinionView",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/setupView/setupView",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		}
         ,{
             "path" : "pages/params/params/params",
             "style" :                                                                                    

@@ -142,7 +142,53 @@ async function qingjia() {
 	const {data} = await http.get('article/api/comment/list/14')
 	return data
 }
+async function signins(code,mobile) {
+	const {data} = await http.post('auth/login',{code:code,mobile:mobile})
+	return data
+}
+// 获取验证码
+async function getCode(mobile){
+	const { data } = await http.post('/system/sms/code', {
+		mobile,
+		templateCode: "MSM_1999123123"
+	})
+	return data
+}
+// 请求订单
+async function order() {
+ const {
+  data
+ } = await http.get('pay/order/user/list')
+ return data
+}
+// 我的余额 
+async function balance() {
+ const {
+  data
+ } = await http.get('pay/user/balance')
+ return data
+}
+// 登录
+async function getUser(obj) {
+	const { data } = await http.post('/auth/login', {
+		code: obj.code,
+		mobile: obj.mobile
+	})
+	return data
+}
+// 我的学习 
+async function study() {
+ const {
+  data
+ } = await http.get('course/course/study/list')
+ return data
+}
+
 export {
+	getCode,
+	order,	
+	balance,
+	study,
 	getBanner,
 	category,
 	hot,
@@ -160,5 +206,7 @@ export {
 	setmeal,
 	asks,
 	yueduxiang,
-	qingjia
+	qingjia,
+	signins,
+	getUser,
 }
